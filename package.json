@@ -1,0 +1,24 @@
+{
+  "name": "tailwind-lit",
+  "version": "1.0.0",
+  "description": "Rollup plugin for adding Tailwind support to the lit JS shadow DOM stylesheet",
+  "main": "tailwind-plugin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeremyc2/tailwind-lit.git"
+  },
+  "keywords": [
+    "lit",
+    "tailwind",
+    "rollup"
+  ],
+  "author": "Jeremy Chandler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jeremyc2/tailwind-lit/issues"
+  },
+  "homepage": "https://github.com/jeremyc2/tailwind-lit#readme"
+}
