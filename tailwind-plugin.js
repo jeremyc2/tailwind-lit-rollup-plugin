@@ -84,11 +84,7 @@ function addTailwindCSS({ code: source, css }) {
 
                     quasiPath.replaceWith(types.templateElement({ raw: css }));
                   } catch (error) {
-                    console.log(
-                      "Found some invalid CSS that could not be parsed",
-                      value,
-                      error
-                    );
+                    console.log("Some CSS could not be parsed by TailwindCSS");
                   }
                 });
               });
