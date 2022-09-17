@@ -82,13 +82,15 @@ function addTailwindCSS({ code: source, css }) {
                     "scripts/tw.js"
                   );
 
+                  let css;
                   try {
-                    const css = execSync(
+                    css = execSync(
                       `node "${tailwindScriptPath}" ${escapeShellArg(
                         JSON.stringify(config)
                       )} ${escapeShellArg(value)}`
                     ).toString();
 
+                    css = css.replaceAll("`","\\`")
                     quasiPath.replaceWith(types.templateElement({ raw: css }));
                   } catch (error) {
                     console.log("Some CSS could not be parsed by TailwindCSS");
