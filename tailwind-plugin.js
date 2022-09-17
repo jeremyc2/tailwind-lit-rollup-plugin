@@ -1,4 +1,6 @@
 import { types, transformSync } from "@babel/core";
+import nodePath from "path";
+import { fileURLToPath } from 'url';
 
 import { execSync } from "child_process";
 
@@ -75,9 +77,14 @@ function addTailwindCSS({ code: source, css }) {
                   // Lookup cooked vs raw
                   const value = quasiPath.node.value.raw;
 
+                  const tailwindScriptPath = nodePath.join(
+                    nodePath.dirname(fileURLToPath(import.meta.url)), 
+                    "scripts/tw.js"
+                  );
+
                   try {
                     const css = execSync(
-                      `node ./scripts/tw.js ${escapeShellArg(
+                      `node "${tailwindScriptPath}" ${escapeShellArg(
                         JSON.stringify(config)
                       )} ${escapeShellArg(value)}`
                     ).toString();
