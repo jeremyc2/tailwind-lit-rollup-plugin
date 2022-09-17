@@ -1,6 +1,6 @@
 import { types, transformSync } from "@babel/core";
 import nodePath from "path";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 
 import { execSync } from "child_process";
 
@@ -52,7 +52,7 @@ function removeCSS(source) {
   return { code, css };
 }
 
-function addTailwindCSS({ code: source, css }) {
+function addTailwindCSS({ code: source, css }, tailwindConfig = {}) {
   const { code } = transformSync(source, {
     plugins: [
       function addTailwindCSS() {
@@ -62,14 +62,11 @@ function addTailwindCSS({ code: source, css }) {
               css.forEach(({ absolutePath, code }) => {
                 const currentPath = path.get(absolutePath);
 
-                // TODO grab the actual config file
-                const config = {
-                  content: [
-                    {
-                      raw: source,
-                    },
-                  ],
-                };
+                tailwindConfig.content = [
+                  {
+                    raw: source,
+                  },
+                ];
 
                 currentPath.replaceWithSourceString(code);
 
@@ -78,7 +75,7 @@ function addTailwindCSS({ code: source, css }) {
                   const value = quasiPath.node.value.raw;
 
                   const tailwindScriptPath = nodePath.join(
-                    nodePath.dirname(fileURLToPath(import.meta.url)), 
+                    nodePath.dirname(fileURLToPath(import.meta.url)),
                     "scripts/tw.js"
                   );
 
@@ -86,11 +83,11 @@ function addTailwindCSS({ code: source, css }) {
                   try {
                     css = execSync(
                       `node "${tailwindScriptPath}" ${escapeShellArg(
-                        JSON.stringify(config)
+                        JSON.stringify(tailwindConfig)
                       )} ${escapeShellArg(value)}`
                     ).toString();
 
-                    css = css.replaceAll("`","\\`")
+                    css = css.replaceAll("`", "\\`");
                     quasiPath.replaceWith(types.templateElement({ raw: css }));
                   } catch (error) {
                     console.log("Some CSS could not be parsed by TailwindCSS");
@@ -109,12 +106,12 @@ function addTailwindCSS({ code: source, css }) {
   return code;
 }
 
-export default function tailwindPlugin() {
+export default function tailwindPlugin(tailwindConfig) {
   return {
     name: "tailwind-plugin",
     transform(source, id) {
       if (!id.endsWith(".js") && !id.endsWith(".ts")) return;
-      const result = addTailwindCSS(removeCSS(source));
+      const result = addTailwindCSS(removeCSS(source), tailwindConfig);
       return result;
     },
   };
