@@ -1,4 +1,4 @@
-# tailwind-lit
+# tailwind-lit-rollup-plugin
 Rollup plugin for adding TailwindCSS to Lit components.
 
 ✅ Compatible with Vite  
