@@ -87,7 +87,10 @@ function addTailwindCSS({ code: source, css }, tailwindConfig = {}) {
                       )} ${escapeShellArg(value)}`
                     ).toString();
 
-                    css = css.replaceAll("\\", "\\\\").replaceAll("`", "\\`");
+                    css = css
+                      .replaceAll(/^\s*\n/gm, "")
+                      .replaceAll("\\", "\\\\")
+                      .replaceAll("`", "\\`");
                     quasiPath.replaceWith(types.templateElement({ raw: css }));
                   } catch (error) {
                     console.log("Some CSS could not be parsed by TailwindCSS");
