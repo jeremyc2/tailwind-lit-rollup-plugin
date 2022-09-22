@@ -71,7 +71,6 @@ function addTailwindCSS({ code: source, css }, tailwindConfig = {}) {
                 currentPath.replaceWithSourceString(code);
 
                 currentPath.get("quasi.quasis").forEach(async (quasiPath) => {
-                  // Lookup cooked vs raw
                   const value = quasiPath.node.value.cooked;
 
                   const tailwindScriptPath = nodePath.join(
