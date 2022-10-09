@@ -39,7 +39,7 @@ function removeCSS(source) {
                 absolutePath: getAbsolutePath(path),
                 code: path.getSource(),
               });
-              path.replaceWith(types.stringLiteral("CSS Placeholder"));
+              path.replaceWithSourceString("css``");
               path.skip();
             },
           },
