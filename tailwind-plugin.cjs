@@ -111,7 +111,7 @@ module.exports = function tailwindPlugin(tailwindConfig) {
   return {
     name: "tailwind-plugin",
     transform(source, id) {
-      if (!id.endsWith(".js") && !id.endsWith(".ts")) return;
+      if (!id.match(/\.js|ts|jsx|tsx$/)) return;
       const result = addTailwindCSS(removeCSS(source), tailwindConfig);
       return result;
     },
