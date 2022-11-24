@@ -112,7 +112,7 @@ export default function tailwindPlugin(tailwindConfig) {
   return {
     name: "tailwind-plugin",
     transform(source, id) {
-      if (!id.match(/\.[jt]s$/)) return;
+      if (!id.match(/\.js|ts|jsx|tsx$/)) return;
       const result = addTailwindCSS(removeCSS(source), tailwindConfig);
       return result;
     },
